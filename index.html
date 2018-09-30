@@ -6,11 +6,28 @@
 <h4>好吧，我们拭目以待 4</h4>
 <h5>这是标题 5</h5>
 <h6>这是标题 6</h6>
-<h1>欢迎访问未来的网站 </h1>
-<h2>虽然还比较简单 </h2>
-<h3>毕竟才刚开始 </h3>
-<h4>好吧，我们拭目以待 </h4>
-<h5>那么现在 </h5>
-<h6>我们开始吧 </h6>
- </body>
-</html>
+<a href="http://www.runoob.com/">访问菜鸟教程</a>
+ <a href="http://www.runoob.com/" target="_blank">访问菜鸟教程!</a>
+ var db = openDatabase('mydb', '1.0', 'Test DB', 2 * 1024 * 1024);
+var msg;
+ 
+db.transaction(function (tx) {
+    tx.executeSql('CREATE TABLE IF NOT EXISTS LOGS (id unique, log)');
+    tx.executeSql('INSERT INTO LOGS (id, log) VALUES (1, "菜鸟教程")');
+    tx.executeSql('INSERT INTO LOGS (id, log) VALUES (2, "www.runoob.com")');
+    msg = '<p>数据表已创建，且插入了两条数据。</p>';
+    document.querySelector('#status').innerHTML =  msg;
+});
+ 
+db.transaction(function (tx) {
+tx.executeSql('SELECT * FROM LOGS', [], function (tx, results) {
+    var len = results.rows.length, i;
+    msg = "<p>查询记录条数: " + len + "</p>";
+    document.querySelector('#status').innerHTML +=  msg;
+ 
+    for (i = 0; i < len; i++){
+        msg = "<p><b>" + results.rows.item(i).log + "</b></p>";
+        document.querySelector('#status').innerHTML +=  msg;
+    }
+}, null);
+});
